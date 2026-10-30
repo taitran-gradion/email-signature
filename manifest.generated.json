@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "name": "email-signature",
+  "version": "0.1.0",
+  "risk_tiers": [
+    {
+      "id": "tool/email_signature_read",
+      "unit": "email-signature",
+      "kind": "agent_tool",
+      "contract": "crm.yaml",
+      "operation": "agent.tool.invoke",
+      "operation_id": "emailSignatureRead",
+      "route": "/ext/email-signature/mine",
+      "method": "GET",
+      "scopes": [
+        "read"
+      ],
+      "tier": "auto_execute",
+      "fragment_hash": "sha256:bff1abf7e9f39d790a86026f75e3a3c2cb579672504e629fbdba276670f35319",
+      "digest": "sha256:2c9d9e543cfbf61b8af55016e74b60b6ba8e547289f17990ff6edd210514c8a6"
+    },
+    {
+      "id": "tool/email_signature_save",
+      "unit": "email-signature",
+      "kind": "agent_tool",
+      "contract": "crm.yaml",
+      "operation": "agent.tool.invoke",
+      "operation_id": "emailSignatureSave",
+      "route": "/ext/email-signature/mine",
+      "method": "POST",
+      "scopes": [
+        "write"
+      ],
+      "tier": "auto_execute",
+      "fragment_hash": "sha256:ec7ba5db834475e6051192982e0385485dc200dcd0250e5543c0b0e85496c335",
+      "digest": "sha256:b5ee137ed4b29a6785c78421474ea52694037abf96e68842e206dfc068494e50"
+    }
+  ],
+  "overlays": [
+    "internal/modules/contacts.(*Store).SignatureFor"
+  ]
+}

@@ -1,0 +1,44 @@
+.ext-email-signature {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-4, 16px);
+  align-items: start;
+}
+
+.ext-email-signature-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  width: 100%;
+}
+
+.ext-email-signature-preview {
+  width: 100%;
+  min-height: 180px;
+  border: 1px solid var(--border, #ddd);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.ext-email-signature-text {
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+/* Settings › Account: the signature as recipients see it, edited from the pencil. */
+.ext-email-signature-current {
+  position: relative;
+  border: 1px solid var(--border, #ddd);
+  border-radius: 6px;
+  padding: 12px 44px 12px 12px;
+}
+
+.ext-email-signature-current-edit {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}
+
+.ext-email-signature-current-text {
+  white-space: pre-wrap;
+  margin: 0;
+}

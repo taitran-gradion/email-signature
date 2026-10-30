@@ -1,0 +1,84 @@
+# SPDX-License-Identifier: BUSL-1.1
+# SPDX-FileCopyrightText: 2026 Gradion
+#
+# Served at /v1/ext/email-signature/mine: paths here are relative to /v1.
+overlay: 1.0.0
+info:
+  title: email-signature
+  version: "0.1.0"
+actions:
+  - target: $.paths['/ext/email-signature/mine']
+    update:
+      get:
+        operationId: emailSignatureRead
+        summary: Read the caller's own HTML email signature.
+        tags: [Extensions]
+        x-rbac-object: ext_email_signature_signature
+        x-rbac-action: read
+        x-mcp-tool:
+          verb: email_signature_read
+          version: 1.0.0
+          title: Read my HTML email signature
+          tier: auto_execute
+          scope: read
+          description: >-
+            Read the HTML signature the caller signs their email with, empty when
+            they wrote none and their mail signs with the workspace template or
+            their plain sign-off. It changes nothing.
+        responses:
+          '200':
+            description: The caller's signature.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  additionalProperties: false
+                  required: [html]
+                  properties:
+                    html: { type: string }
+                    updated_at: { type: string, format: date-time }
+          '401': { $ref: '#/components/responses/Unauthorized' }
+          '403': { $ref: '#/components/responses/Forbidden' }
+      post:
+        operationId: emailSignatureSave
+        summary: Save the caller's own HTML email signature; blank markup clears it.
+        tags: [Extensions]
+        x-rbac-object: ext_email_signature_signature
+        x-rbac-action: update
+        x-mcp-tool:
+          verb: email_signature_save
+          version: 1.0.0
+          title: Save my HTML email signature
+          tier: auto_execute
+          scope: write
+          description: >-
+            Replace the caller's HTML email signature, up to 10000 characters. It
+            may use the placeholders {name}, {title}, {phone} and {logo}. A send
+            keeps paragraphs, line breaks, bold, italic, underline, links and
+            coloured, sized spans, and drops everything else. Blank markup clears
+            it, and the caller's mail signs as before.
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [html]
+                properties:
+                  html: { type: string, maxLength: 10000 }
+        responses:
+          '200':
+            description: The caller's signature after the write.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  additionalProperties: false
+                  required: [html]
+                  properties:
+                    html: { type: string }
+                    updated_at: { type: string, format: date-time }
+          '401': { $ref: '#/components/responses/Unauthorized' }
+          '403': { $ref: '#/components/responses/Forbidden' }
+          '422': { $ref: '#/components/responses/ValidationError' }

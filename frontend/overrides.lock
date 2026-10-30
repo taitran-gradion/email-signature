@@ -1,0 +1,3 @@
+# The core file each override was written against. A core change to it stops
+# the build until the override is re-read and this hash is updated.
+src/screens/settingssignaturerow.tsx sha256:e8431f9e315357eb580978a576aa3cde15805cdf9fe2f172721ba702b31a9a53
